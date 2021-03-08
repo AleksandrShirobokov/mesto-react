@@ -1,6 +1,6 @@
 import React from 'react'
 
-function PopupImage() {
+function PopupImage(props) {
     return (
         <section className="popup popup_type_image">
             <div className="popup__wrapper">
