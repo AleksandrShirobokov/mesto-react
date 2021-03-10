@@ -17,20 +17,12 @@ function Main(props) {
             setUserAvatar(data.avatar)}
         )
         .catch(err=>console.log(err))
-    })
+    },[])
 
     useEffect(() => {
         api.getInitialCards()
-        .then((data) => {
-            const cards = data.map(data => {
-                return{
-                    likes: data.likes,
-                    name: data.name,
-                    link: data.link
-                }
-            }) 
-            setCards(cards)
-            console.log(cards)
+        .then((data) => { 
+            setCards(data)
         })
         .catch(err=>console.log(err))
     },[])
@@ -40,7 +32,7 @@ function Main(props) {
             <section className="profile">
                 <div className="profile__items">
                     <div className="profile__wrapper">
-                        <img className="profile__image"  src={userAvatar}/>
+                        <img className="profile__image"  src={userAvatar} alt={userName} />
                         <button className="profile__cursor" onClick={props.onEditAvatar}></button>
                     </div>
                     <div className="profile__info">
@@ -54,11 +46,13 @@ function Main(props) {
 
             <section className="elements">
                     {cards.map(card => 
+                    (
                         <Card 
                         onCardClick={props.onCardClick}
                         card={card}
                         key={card._id}
                         />
+                    )
                     )}
 
             </section>

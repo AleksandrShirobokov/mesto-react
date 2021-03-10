@@ -33,7 +33,7 @@ function App() {
 
   return (
   <>
-  <body>
+
     <div className="page">
     <Header />  
        <Main 
@@ -69,7 +69,6 @@ function App() {
 
     </div>
 
-  </body>
   </>  
   );
   
