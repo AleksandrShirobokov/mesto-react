@@ -1,43 +1,22 @@
-import React, { useEffect } from 'react'
-import api from '../utils/api'
+import React from 'react'
 import Card from './Card'
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 function Main(props) {
 
-    const [userName, setUserName] = React.useState()
-    const [userDescription, setUserDescription] = React.useState()
-    const [userAvatar, setUserAvatar] = React.useState()
-    const [cards, setCards] = React.useState([]) 
-
-    useEffect(() => {
-        api.getUserInfoMe()
-        .then((data) => {
-            setUserName(data.name);
-            setUserDescription(data.about);
-            setUserAvatar(data.avatar)}
-        )
-        .catch(err=>console.log(err))
-    },[])
-
-    useEffect(() => {
-        api.getInitialCards()
-        .then((data) => { 
-            setCards(data)
-        })
-        .catch(err=>console.log(err))
-    },[])
+    const currentValue = React.useContext(CurrentUserContext)
 
     return (
         <main className="content">
             <section className="profile">
                 <div className="profile__items">
                     <div className="profile__wrapper">
-                        <img className="profile__image"  src={userAvatar} alt={userName} />
+                        <img className="profile__image" src={currentValue.avatar} alt={currentValue.name} />
                         <button className="profile__cursor" onClick={props.onEditAvatar}></button>
                     </div>
                     <div className="profile__info">
-                        <h1 className="profile__title">{userName}</h1>
-                        <p className="profile__subtitle">{userDescription}</p>
+                        <h1 className="profile__title">{currentValue.name}</h1>
+                        <p className="profile__subtitle">{currentValue.about}</p>
                         <button className="profile__button-edit" type="button" onClick={props.onEditProfile}></button>
                     </div>
                 </div>    
@@ -45,7 +24,7 @@ function Main(props) {
             </section>
 
             <section className="elements">
-                    {cards.map(card => 
+                    {props.cards.map(card => 
                     (
                         <Card 
                         onCardClick={props.onCardClick}
