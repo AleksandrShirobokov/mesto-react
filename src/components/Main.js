@@ -4,19 +4,19 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
 function Main(props) {
 
-    const currentValue = React.useContext(CurrentUserContext)
+    const currentUser = React.useContext(CurrentUserContext);
 
     return (
         <main className="content">
             <section className="profile">
                 <div className="profile__items">
                     <div className="profile__wrapper">
-                        <img className="profile__image" src={currentValue.avatar} alt={currentValue.name} />
+                        <img className="profile__image" src={currentUser.avatar} alt={currentUser.name} />
                         <button className="profile__cursor" onClick={props.onEditAvatar}></button>
                     </div>
                     <div className="profile__info">
-                        <h1 className="profile__title">{currentValue.name}</h1>
-                        <p className="profile__subtitle">{currentValue.about}</p>
+                        <h1 className="profile__title">{currentUser.name}</h1>
+                        <p className="profile__subtitle">{currentUser.about}</p>
                         <button className="profile__button-edit" type="button" onClick={props.onEditProfile}></button>
                     </div>
                 </div>    
@@ -30,6 +30,8 @@ function Main(props) {
                         onCardClick={props.onCardClick}
                         card={card}
                         key={card._id}
+                        onCardLike={props.onCardLike}
+                        onCardDelete={props.onCardDelete}
                         />
                     )
                     )}

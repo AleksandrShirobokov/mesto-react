@@ -28,6 +28,8 @@
 @import url("../src/blocks/element/__image-like-number/element__image-like-number.css");
 @import url("../src/blocks/element/__wrapper/element__wrapper.css");
 @import url("../src/blocks/element/__delete/element__delete.css");
+@import url("../src/blocks/element/__delete/_visible/element__delete_visible.css");
+@import url("../src/blocks/element/__delete/hidden/element__delete_hidden.css");
 @import url("../src/blocks/element/__image-like/element__image-like.css");
 @import url("../src/blocks/element/__image-like/_active/element__image-like_active.css");
 
