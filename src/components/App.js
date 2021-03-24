@@ -17,7 +17,8 @@ function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false); 
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false); 
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false); 
-    const [selectedCard, handleCardClick] = React.useState(false);
+    const [selectedCard, setSelectedCard] = React.useState({});
+    const [isPopupImageOpen, setPopupImageOpen] = React.useState(false)
 
     useEffect(() => {
         api.getInitialCards()
@@ -36,13 +37,6 @@ function App() {
         .catch(err=>console.log(err))
     },[])
 
-    function closeAllPopups() {
-        setIsEditAvatarPopupOpen(false);
-        setIsEditProfilePopupOpen(false);
-        setIsAddPlacePopupOpen(false);
-        handleCardClick(false);
-    }
-
     function handleEditAvatarClick() {
         setIsEditAvatarPopupOpen(true);
     }
@@ -53,6 +47,18 @@ function App() {
 
     function handleAddPlaceClick() {
         setIsAddPlacePopupOpen(true);
+    }
+
+    function handleCardClick(card) {
+        setPopupImageOpen(true)
+        setSelectedCard(card)
+    }
+
+    function closeAllPopups() {
+        setIsEditAvatarPopupOpen(false);
+        setIsEditProfilePopupOpen(false);
+        setIsAddPlacePopupOpen(false);
+        setPopupImageOpen(false)
     }
 
     function handleCardLike(card) {
@@ -123,7 +129,7 @@ function App() {
 
                 <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCard={handleAddPlaceSubmit}></AddPlacePopup>
                     
-                <ImagePopup card={selectedCard}  onClose={closeAllPopups}/> 
+                <ImagePopup card={selectedCard} isOpen={isPopupImageOpen} onClose={closeAllPopups}/> 
 
                 <PopupWithForm name="delete" title="Вы уверены?" /* isOpen="popup_opened" *//>
             </CurrentUserContext.Provider>
