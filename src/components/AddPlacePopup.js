@@ -28,7 +28,7 @@ function AddPlacePopup(props) {
     }
 
     return (
-        <PopupWithForm name="new-card" title="Новое место" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} children={(
+        <PopupWithForm name="new-card" title="Новое место" isOpen={props.isOpen} onClose={props.onClose} onOverlayClose={props.onOverlayClose} onSubmit={handleSubmit} children={(
         <>
             <input value={placeName} onChange={dischargeNameInput} className="popup__input popup__input_type_title" id="name-card" placeholder="Название" name="name" minLength="2" maxLength="30" required />
             <span id="name-card-error" className="error"></span>

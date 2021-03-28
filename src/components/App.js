@@ -21,18 +21,14 @@ function App() {
     const [isPopupImageOpen, setPopupImageOpen] = React.useState(false)
 
     useEffect(() => {
-        api.getInitialCards()
+        Promise.all([
+            api.getInitialCards(),
+            api.getUserInfoMe()
+        ])
         .then((data) => { 
-            setCards(data)
-            console.log(data)
-        })
-        .catch(err=>console.log(err))
-    },[])
-
-    useEffect(() => {
-        api.getUserInfoMe()
-        .then((data) => {
-            setCurrentUser(data);
+            const [dataCard, dataUser] = data;
+            setCards(dataCard)
+            setCurrentUser(dataUser);
         })
         .catch(err=>console.log(err))
     },[])
@@ -61,6 +57,25 @@ function App() {
         setPopupImageOpen(false)
     }
 
+    function handleOverlayClose(evt) {
+        if(evt.target === evt.currentTarget) {
+            closeAllPopups()
+        }
+    }
+
+    React.useEffect(() => {
+        function handleEscClose(evt) {
+            if(evt.key === 'Escape') {
+                closeAllPopups()
+                console.log('esc')
+            }
+        }
+        document.addEventListener('keydown', handleEscClose);
+        return () => {
+            document.removeEventListener('keydown', handleEscClose)
+        }
+    })
+    
     function handleCardLike(card) {
         // Снова проверяем, есть ли уже лайк на этой карточке
         const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -123,13 +138,13 @@ function App() {
                 />
                 <Footer />
 
-                <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}></EditProfilePopup>
+                <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onOverlayClose={handleOverlayClose} onUpdateUser={handleUpdateUser}></EditProfilePopup>
 
-                <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}></EditAvatarPopup>
+                <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onOverlayClose={handleOverlayClose} onUpdateAvatar={handleUpdateAvatar}></EditAvatarPopup>
 
-                <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCard={handleAddPlaceSubmit}></AddPlacePopup>
+                <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onOverlayClose={handleOverlayClose} onAddCard={handleAddPlaceSubmit}></AddPlacePopup>
                     
-                <ImagePopup card={selectedCard} isOpen={isPopupImageOpen} onClose={closeAllPopups}/> 
+                <ImagePopup card={selectedCard} isOpen={isPopupImageOpen} onClose={closeAllPopups} onOverlayClose={handleOverlayClose}/> 
 
                 <PopupWithForm name="delete" title="Вы уверены?" /* isOpen="popup_opened" *//>
             </CurrentUserContext.Provider>

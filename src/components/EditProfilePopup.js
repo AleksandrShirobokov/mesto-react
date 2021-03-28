@@ -33,7 +33,7 @@ function EditProfilePopup(props) {
     }
 
     return (
-        <PopupWithForm name="edit" title="Редактировать профиль" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} children={(
+        <PopupWithForm name="edit" title="Редактировать профиль" isOpen={props.isOpen} onOverlayClose={props.onOverlayClose} onClose={props.onClose} onSubmit={handleSubmit} children={(
         <>
             <input value={name || ''} type="text" className="popup__input popup__input_type_name" id="user-name" name="name" placeholder="Имя" required minLength="2" maxLength="40" onChange={handleChangeName} />
             <span id="user-name-error" className="error"></span>
